@@ -2,7 +2,8 @@ const UserRepository=require('../repository/user_repository.js')
 
 const {JWT_KEY}= require('../config/serverconfig.js')
 const jwt =require('jsonwebtoken')
-const bcrypt=require('bcrypt')
+const bcrypt=require('bcrypt');
+
 
 class UserService{
 
@@ -63,7 +64,44 @@ class UserService{
      }
 
 
+     async signIn(email,password){
 
+        try {
+            
+            //first fetch the user and see its pass in db
+
+            const user=await this.userRepository.getUserEmail(email);
+
+           
+
+            const dbpassword=user.password;
+
+            const passwordcheck=this.checkPassword(password,dbpassword);
+
+            if(!passwordcheck){
+                console.log("password do not match");
+
+                throw {error:"Incorrect password"}
+                
+            }
+            else{
+
+                const newJwt= this.createToken({email:user.email,id:user.id})
+
+                return newJwt
+
+
+            }
+
+           
+
+
+        } catch (error) {
+            throw error
+        }
+
+
+     }
 
      verifyToken(token){
 

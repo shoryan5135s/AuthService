@@ -9,6 +9,6 @@ const UserController=require('../../controllers/user_controller.js');
 
 
 router.post('/signup',UserController.create)
-
+router.post('/signin',UserController.signIn)
 
 module.exports=router

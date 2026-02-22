@@ -83,6 +83,26 @@ class UserRepository {
     }
 
 
+    async getUserEmail(email){
+
+        try {
+            
+            const user=await User.findOne({
+                where:{
+                    email:email
+                }
+            })
+
+            return user;
+
+
+        } catch (error) {
+            throw error
+        }
+
+    }
+
+
 
 }
 
