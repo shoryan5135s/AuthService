@@ -2,6 +2,7 @@ const UserRepository=require('../repository/user_repository.js')
 
 const {JWT_KEY}= require('../config/serverconfig.js')
 const jwt =require('jsonwebtoken')
+const bcrypt=require('bcrypt')
 
 class UserService{
 
@@ -85,6 +86,24 @@ class UserService{
 
      }
 
+
+     checkPassword(userPassword,encryptedPassword){
+        try {
+            
+
+            const response =bcrypt.compareSync(userPassword,encryptedPassword)
+
+            return response;
+
+
+        } 
+        
+        
+        catch (error) {
+            console.log(error);
+            
+        }
+     }
 }
 
 
