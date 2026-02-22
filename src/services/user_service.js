@@ -1,5 +1,7 @@
 const UserRepository=require('../repository/user_repository.js')
 
+const {JWT_KEY}= require('../config/serverconfig.js')
+const jwt =require('jsonwebtoken')
 
 class UserService{
 
@@ -34,7 +36,54 @@ class UserService{
     }
 
 
+     createToken(user){
 
+        try {
+            
+            const result= jwt.sign(user,JWT_KEY,{
+                expiresIn: '1d'
+            })
+
+
+            return result;
+
+
+        } 
+        
+        
+        
+        catch (error) {
+            console.log("something went wrong while creating token");
+
+            throw error
+        }
+
+
+     }
+
+
+
+
+     verifyToken(token){
+
+        try {
+            
+        const response=jwt.verify(token,JWT_KEY)
+
+        return response;
+        
+        } 
+        
+        
+        
+        catch (error) {
+            console.log("error occured while verifying token");
+            throw error;
+            
+        }
+
+
+     }
 
 }
 

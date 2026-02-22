@@ -5,6 +5,9 @@ const {PORT}= require('./config/serverconfig.js')
 
 const apiRoutes=require('./Routes/index.js')
 
+
+
+
 const prepareAndStartServer = ()=>{
 
     app.use(bodyParser.json())
@@ -18,7 +21,7 @@ const prepareAndStartServer = ()=>{
 
 
         console.log(`server started at ${PORT}`)
-        
+      
 
 
     })
