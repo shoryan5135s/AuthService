@@ -104,6 +104,28 @@ class UserRepository {
 
 
 
+    async isAdmin(userId){
+        try {
+            
+            const user=await User.findByPk(userId)
+            const Role=await Role.findOne({
+                where:{
+                    name:'ADMIN'
+                }
+            })
+
+            return user.hasRole(Role);
+
+
+
+        } catch (error) {
+            console.log("error occured while checking roles in repo: ",error);
+            
+        }
+    }
+
+
+
 }
 
 

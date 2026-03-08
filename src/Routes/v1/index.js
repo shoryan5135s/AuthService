@@ -10,6 +10,14 @@ const {AuthRequestValidator}=require('../../middlewares/index.js')
 
 
 router.post('/signup',AuthRequestValidator.validateUserAuth,UserController.create)
+
+
+
+
+
 router.post('/signin',AuthRequestValidator.validateUserAuth,UserController.signIn)
+
+
+router.get('/isAdmin',AuthRequestValidator.validateRole,UserController.isAdmin)
 
 module.exports=router

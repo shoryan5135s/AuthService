@@ -142,6 +142,17 @@ class UserService{
             
         }
      }
+
+     isAdmin(userId){
+        try {
+            return this.userRepository.isAdmin(userId)
+        } catch (error) {
+
+            console.log("some error occured while checking roles:  ",error);
+            
+        }
+     }
+
 }
 
 

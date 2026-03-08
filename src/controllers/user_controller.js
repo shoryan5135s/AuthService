@@ -77,8 +77,39 @@ const signIn= async (req,res) =>{
 
 }
 
+const isAdmin=async(req,res)=>{
+
+    try {
+        const response=await userService.isAdmin(req.body.id)
+
+        return res.status(200).json({
+            data:response,
+            err:{},
+            success:true,
+            message:'Succesfully fetched the Role'
+
+        })
+
+    } catch (error) {
+        return res.status(500).json({
+
+            message:'something went wrong',
+            data:{},
+            success:false,
+            error:error
+
+
+
+        })
+        
+    }
+
+
+}
+
 
 module.exports={
     create,
-    signIn
+    signIn,
+    isAdmin
 }
