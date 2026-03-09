@@ -27,8 +27,13 @@ class UserService{
         } 
         
         catch (error) {
-            console.log("error while creating user in service");
+
             console.log(error);
+            if(error.name == 'SequelizeValidationError') {
+                throw error;
+            }
+            console.log("Something went wrong in the service layer");
+            throw error;
             
             
         }
@@ -97,6 +102,10 @@ class UserService{
 
 
         } catch (error) {
+            if(error.name=='AttributeNotFound'){
+                throw error
+            }
+
             throw error
         }
 

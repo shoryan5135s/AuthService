@@ -1,5 +1,8 @@
-const { where } = require('sequelize');
-const {User}=require('../../models/index.js')
+const { where} = require('sequelize');
+const {ValidationError}=require('../utils/validation-error.js')
+const {User}=require('../../models/index.js');
+const { ClientError } = require('../utils/client-error.js');
+const { StatusCodes } = require('http-status-codes');
 
 
 
@@ -17,8 +20,15 @@ class UserRepository {
         } 
         
         catch (error) {
-            console.log("something went wrong while creating user");
-            console.log(error);
+
+           
+        console.log("REPO ERROR:", error.name)
+        if(error.name === "SequelizeValidationError"){
+            throw new ValidationError(error)
+        }
+            console.log("Something went wrong on repository layer");
+            throw error;
+
             
             
         }
@@ -51,6 +61,7 @@ class UserRepository {
         catch (error) {
             console.log("error while deleting or destroying user");
             console.log(error);
+            throw error;
             
         }
 
@@ -77,6 +88,7 @@ class UserRepository {
             console.log("error occurred while getting the user (repo)")
             
             console.log(error);
+            throw error;
             
             
         }
@@ -92,6 +104,14 @@ class UserRepository {
                     email:email
                 }
             })
+            if(!user){
+                throw new ClientError(
+                    
+                    'Invalid email sent in the address',
+                    'Please check the email',
+                    StatusCodes.NOT_FOUND
+                )
+            }
 
             return user;
 
@@ -120,6 +140,7 @@ class UserRepository {
 
         } catch (error) {
             console.log("error occured while checking roles in repo: ",error);
+            throw error;
             
         }
     }

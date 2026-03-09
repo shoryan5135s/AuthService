@@ -25,14 +25,13 @@ const create =async(req,res)=>{
             })
             
         } catch (error) {
-            console.log(error);
+            
 
-            return res.status(500).json({
-                message:"Something went wrong while creating(controller)",
-                data:{},
-                success:false,
-                err:error
-
+             return res.status(error.statusCode || 500).json({
+            message: error.message,
+            data: {},
+            success: false,
+            err: error.explaination
             })
             
         }
@@ -60,14 +59,16 @@ const signIn= async (req,res) =>{
     
     catch (error) {
         
-        console.log("something went wwrong while signIn");
+        console.log("something went wrong while signIn");
        console.log("FULL ERROR:", error);
 
-        return res.status(500).json({
-            message:"something went wrong while signIn",
+       
+
+        return res.status(error.statusCode||500).json({
+            message:error.message,
             data:{},
             success:false,
-            err:error
+            err:error.explaination
 
         })
         
